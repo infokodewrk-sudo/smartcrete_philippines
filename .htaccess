@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Remove ?i=1 from URL
+RewriteCond %{QUERY_STRING} (^|&)i=1(&|$)
+RewriteRule ^ %{REQUEST_URI}? [R=301,L]
+
+# Remove .html extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^/]+)$ $1.html [L]
+
+# Redirect requests with .html to without .html (SEO-friendly)
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html[\s?]
+RewriteRule ^ %1 [R=301,L]
